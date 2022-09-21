@@ -1,0 +1,46 @@
+## sql 연동
+ - 내가 설치한 mysql db에 맞춰야 하나 해서 맞추려고 했는데 안됐다.
+ - docker/mysql/docker-compose.yml에 이 프로젝트에서 쓰는 db가 정의되어 있었다.
+ - docker로 sql 설정하려고 docker 및 docker-compose를 깔았다. 이 과정에서 여러 가지 실패 겪음(homebrew, 최신 버전 docker 호환 불가)
+ - 깐 다음에도 userDao 테스트 실패해서 어떤 sql 쓰는지 설정해보려고 한다.
+ - 알고보니 preparedStatement의 parameter number를 모두 1로 설정해놔서 2, 3번째에 값이 없어서 오류가 발생한 거였다...
+
+### 참고한 사이트
+- https://deockstory.tistory.com/25
+  토비의 스프링 환경 그대로 하려고 한 분. docker 설정 등 참고할 점이 있었다.
+- https://github.com/Deocksoo/Toby-spring-exmaple/commit/e34c5f8efa9569228f74441ee96b6956c689eef9
+  바로 윗 분이 만드신 깃헙 저장소.
+
+### docker 실행 어떻게 하는가?
+ - docker/mysql 디렉토리로 이동해서 docker-compose.yml 설정에 따라 mysql을 설치
+    $ cd docker
+    $ docker-compose up -d
+ - docker ps 하면 실행 중인 컨테이너를 모두 보여준다. mysql은 mysql_db_1이라는 이름으로 실행되고 있다.
+ - database에 각 모듈별로 필요한 table을 만들어야 한다. intellij ultimate 버전이라면 intellij 안에서도 할 수 있지만,
+ community 버전이라면 지원하지 않는다. 로컬에서 mysql 콘솔을 띄워 만들어주면 된다.
+
+ - docker 실행은 docker 앱에서 알려준다. docker run -d -p 80:80 docker/getting-started
+
+### docker에서 실행한 mysql 콘솔 어떻게 조작하나?
+ - $ docker exec -it mysql-container bash로 bash를 연다.
+ - bash-4.4# mysql -u spring -p 명령을 실행하고 (여기선 $ 대신 bash-4.4#다) 패스워드(book)을 입력하면 mysql을 실행할 수 있다.
+ - 데이터베이스를 확인하고 알맞은 것을 고른다.
+ mysql> show databases;
+ +--------------------+
+ | Database           |
+ +--------------------+
+ | information_schema |
+ | performance_schema |
+ | springbook         |
+ +--------------------+
+ 3 rows in set (0.01 sec)
+ - springbook 데이터베이스를 고른다.
+ mysql> use springbook;
+ Database changed
+ - 다음엔 sql/ 디렉토리 안 sql 명령을 참고해서 users 테이블을 만들어준다. 테이블을 만들어야 DAO 테스트 예제를 실행할 수 있다.
+
+## java version 맞추기
+
+ - 꽤나 여러가지 설정을 맞춰줘야 한다.
+ - external libraries에 나오는 java version을 맞추려면 File - Project Structure 메뉴에서 설정해야 한다.
+ - 위 내용을 찾으려고 intellij change external libraries으로 검색했다.

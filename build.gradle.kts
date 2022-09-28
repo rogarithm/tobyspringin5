@@ -15,6 +15,8 @@ repositories {
 dependencies {
     implementation("org.projectlombok:lombok:1.18.24")
     implementation("mysql:mysql-connector-java:8.0.30")
+    implementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    implementation("org.hamcrest:hamcrest:2.2")
     annotationProcessor("org.projectlombok:lombok:1.18.24")
 }
 

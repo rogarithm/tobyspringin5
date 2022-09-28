@@ -1,3 +1,5 @@
+https://github.com/tobyilee/tobyspringin5
+
 ## sql 연동
  - 내가 설치한 mysql db에 맞춰야 하나 해서 맞추려고 했는데 안됐다.
  - docker/mysql/docker-compose.yml에 이 프로젝트에서 쓰는 db가 정의되어 있었다.

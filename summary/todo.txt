@@ -1,5 +1,19 @@
 https://github.com/tobyilee/tobyspringin5
 
+## terminal에서 mysql 실행 명령 알아내고 스크립트로 만들기
+
+ 실행할 명령
+ - docker exec -it mysql_db_1 bash
+ - mysql -u spring -p
+ - use springbook;
+ - delete from users;
+
+ 실험 기록
+ - 여기 참고했다. https://subicura.com/2017/01/19/docker-guide-for-beginners-2.html
+ - 콘테이너를 만들고 mysql을 실행해야 하는 것 같다.
+ - docker run --rm -it mysql:8.0.30 bash -> mysql -u spring -p 했을 때 실패. 이후 콘테이너는 자동으로 지워졌다.
+ - 이미지 이름으로 실행하면 (docker run mysql:8.0.30) 실패했다.
+
 ## sql 연동
  - 내가 설치한 mysql db에 맞춰야 하나 해서 맞추려고 했는데 안됐다.
  - docker/mysql/docker-compose.yml에 이 프로젝트에서 쓰는 db가 정의되어 있었다.
@@ -24,7 +38,7 @@ https://github.com/tobyilee/tobyspringin5
  - docker 실행은 docker 앱에서 알려준다. docker run -d -p 80:80 docker/getting-started
 
 ### docker에서 실행한 mysql 콘솔 어떻게 조작하나?
- - $ docker exec -it mysql-container bash로 bash를 연다.
+ - $ docker exec -it mysql_db_1 bash로 bash를 연다.
  - bash-4.4# mysql -u spring -p 명령을 실행하고 (여기선 $ 대신 bash-4.4#다) 패스워드(book)을 입력하면 mysql을 실행할 수 있다.
  - 데이터베이스를 확인하고 알맞은 것을 고른다.
  mysql> show databases;

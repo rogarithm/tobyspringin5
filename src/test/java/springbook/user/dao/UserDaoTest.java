@@ -7,13 +7,20 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import springbook.user.domain.User;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class UserDaoTest {
 
+    @Autowired
+    private ApplicationContext context;
     private UserDao dao;
     private User user1;
     private User user2;
@@ -21,7 +28,6 @@ public class UserDaoTest {
 
     @BeforeEach
     public void setUp() {
-        ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
         this.dao = context.getBean("userDao", UserDao.class);
 
         this.user1 = new User("gyumee", "박성철", "springno1");

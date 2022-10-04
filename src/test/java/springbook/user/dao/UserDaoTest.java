@@ -13,6 +13,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import springbook.user.domain.User;
 
 public class UserDaoTest {
+
     private UserDao dao;
 
     @BeforeEach
@@ -28,7 +29,6 @@ public class UserDaoTest {
 
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
-
 
         dao.add(user1);
         dao.add(user2);
@@ -70,5 +70,4 @@ public class UserDaoTest {
 
         Assertions.assertThrows(EmptyResultDataAccessException.class, () -> dao.get("unknown_id"));
     }
-
 }

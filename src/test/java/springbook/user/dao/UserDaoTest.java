@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.sql.SQLException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
@@ -78,4 +79,17 @@ public class UserDaoTest {
         dao.add(user3);
         assertThat(dao.getCount()).isEqualTo(3);
     }
+
+    @Test
+    @DisplayName("get() 실패 시")
+    public void getUserFailure() throws SQLException {
+        ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
+
+        UserDao dao = context.getBean("userDao", UserDao.class);
+        dao.deleteAll();
+        assertThat(dao.getCount()).isEqualTo(0);
+
+        Assertions.assertThrows(EmptyResultDataAccessException.class, () -> dao.get("unknown_id"));
+    }
+
 }

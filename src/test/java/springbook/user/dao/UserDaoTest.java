@@ -3,6 +3,7 @@ package springbook.user.dao;
 import static org.assertj.core.api.Assertions.*;
 
 import java.sql.SQLException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
@@ -51,5 +52,27 @@ public class UserDaoTest {
         int countAfter = dao.getCount();
         assertThat(countBefore).isEqualTo(1);
         assertThat(countAfter).isEqualTo(0);
+    }
+
+    @Test
+    public void count() throws SQLException {
+        ApplicationContext context = new GenericXmlApplicationContext(
+                "applicationContext.xml");
+        UserDao dao = context.getBean("userDao", UserDao.class);
+        User user1 = new User("gyumee", "박성철", "springno1");
+        User user2 = new User("leegw700", "이길원", "springno2");
+        User user3 = new User("bumjin", "박범진", "springno3");
+
+        dao.deleteAll();
+        assertThat(dao.getCount()).isEqualTo(0);
+
+        dao.add(user1);
+        assertThat(dao.getCount()).isEqualTo(1);
+
+        dao.add(user2);
+        assertThat(dao.getCount()).isEqualTo(2);
+
+        dao.add(user3);
+        assertThat(dao.getCount()).isEqualTo(3);
     }
 }

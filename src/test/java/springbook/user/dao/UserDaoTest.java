@@ -39,26 +39,6 @@ public class UserDaoTest {
     }
 
     @Test
-    public void countDiffAfterDelete() throws SQLException {
-        ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
-
-        UserDao dao = context.getBean("userDao", UserDao.class);
-
-        User user = new User();
-        user.setId("gyumee");
-        user.setName("박성철");
-        user.setPassword("springno1");
-
-        dao.add(user);
-
-        int countBefore = dao.getCount();
-        dao.deleteAll();
-        int countAfter = dao.getCount();
-        assertThat(countBefore).isEqualTo(1);
-        assertThat(countAfter).isEqualTo(0);
-    }
-
-    @Test
     public void count() throws SQLException {
         ApplicationContext context = new GenericXmlApplicationContext(
                 "applicationContext.xml");

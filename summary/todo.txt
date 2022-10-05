@@ -1,5 +1,30 @@
 https://github.com/tobyilee/tobyspringin5
 
+## 새로운 데이터베이스 만들기
+루트 계정으로 들어가야 데이터베이스를 만들 수 있다. 루트 계정 비밀번호 확인은 이렇게 했다.
+- docker inspect mysql_db_1 | grep PASS (https://stackoverflow.com/a/69368899)
+
+그 다음 create database testdb; 로 testdb 데이터베이스를 만들었다.
+
+이후 testdb에 users 테이블을 만들었다.
+
+특정 사용자에 접근 권한 주기
+데이터베이스를 만들었는데 테스트가 실패했다. spring 사용자에 testdb의 users 테이블 접근 권한이 없어 그렇다.
+USE mysql;
+CREATE USER 'spring'@'localhost' IDENTIFIED BY 'book'; // 이미 사용자가 만들어져 있어서 하지 않았던 것 같다
+GRANT ALL ON *.* TO 'spring'@'localhost';
+FLUSH PRIVILEGES;
+
+이후에도 Access denied for user 'spring'@'%' to database 오류가 났다.
+mysql에서 select host, user from user;로 유저 및 권한을 확인해보니 localhost에서 접속할 수 있는 spring 사용자와 %에서
+접속할 수 있는 spring 사용자 둘이 있었다. 나는 localhost spring 사용자에만 권한을 줬는데 인텔리제이에서는 % spring 사용자로
+testdb에 접속할 수 있어야 하나보다. 그래서 다음 두 명령으로 % spring 사용자에도 권한을 부여했고, 잘 되는 것을 확인했다.
+
+GRANT ALL ON *.* TO 'spring'@'%';
+FLUSH PRIVILEGES;
+
+
+
 ## terminal에서 mysql 실행 명령 알아내고 스크립트로 만들기
 
  실행할 명령
@@ -13,6 +38,13 @@ https://github.com/tobyilee/tobyspringin5
  - 콘테이너를 만들고 mysql을 실행해야 하는 것 같다.
  - docker run --rm -it mysql:8.0.30 bash -> mysql -u spring -p 했을 때 실패. 이후 콘테이너는 자동으로 지워졌다.
  - 이미지 이름으로 실행하면 (docker run mysql:8.0.30) 실패했다.
+
+## Spring 5에서 달라진 부분 중 모르는 것
+
+ - @ExtendWith(SpringExtension.class)에서 SpringExtension은 뭐하는 클래스인가?
+ - @ContextConfiguration(locations = {"classpath:applicationContext.xml"}) 설정값을 토비님과 같이 했는데도
+ INFO: Loaded default TestExecutionListener class names from location [META-INF/spring.factories]
+ 오류 메시지가 나온다. 어떻게 해결해야 하나?
 
 ## sql 연동
  - 내가 설치한 mysql db에 맞춰야 하나 해서 맞추려고 했는데 안됐다.

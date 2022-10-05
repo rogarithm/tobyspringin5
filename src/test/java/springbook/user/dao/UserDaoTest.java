@@ -3,6 +3,7 @@ package springbook.user.dao;
 import static org.assertj.core.api.Assertions.*;
 
 import java.sql.SQLException;
+import javax.sql.DataSource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,16 +12,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import springbook.user.domain.User;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = {"classpath:test-applicationContext.xml"})
 public class UserDaoTest {
 
-    @Autowired
-    private ApplicationContext context;
     private UserDao dao;
     private User user1;
     private User user2;
@@ -28,7 +26,11 @@ public class UserDaoTest {
 
     @BeforeEach
     public void setUp() {
-        this.dao = context.getBean("userDao", UserDao.class);
+        dao = new UserDao();
+        DataSource dataSource = new SingleConnectionDataSource(
+                "jdbc:mysql://localhost/testdb?characterEncoding=UTF-8",
+                "spring", "book", true);
+        dao.setDataSource(dataSource);
 
         this.user1 = new User("gyumee", "박성철", "springno1");
         this.user2 = new User("leegw700", "이길원", "springno2");

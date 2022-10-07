@@ -90,6 +90,15 @@ public class UserDao {
     }
 
     public void deleteAll() throws SQLException {
+        class DeleteAllStatement implements StatementStrategy {
+
+            @Override
+            public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+                PreparedStatement ps = c.prepareStatement("delete from users");
+                return ps;
+            }
+        }
+
         StatementStrategy st = new DeleteAllStatement();
         jdbcContextWithStatementStrategy(st);
     }

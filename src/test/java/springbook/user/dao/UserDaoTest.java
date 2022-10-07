@@ -31,6 +31,8 @@ public class UserDaoTest {
                 "jdbc:mysql://localhost/testdb?characterEncoding=UTF-8",
                 "spring", "book", true);
         dao.setDataSource(dataSource);
+        JdbcContext jdbcContext = new JdbcContext();
+        dao.setJdbcContext(jdbcContext);
 
         this.user1 = new User("gyumee", "박성철", "springno1");
         this.user2 = new User("leegw700", "이길원", "springno2");

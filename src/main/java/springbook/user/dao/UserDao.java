@@ -20,6 +20,7 @@ public class UserDao {
 
     public void setJdbcContext(JdbcContext jdbcContext) {
         this.jdbcContext = jdbcContext;
+        this.jdbcContext.setDataSource(dataSource);
     }
 
     public void add(final User user) throws SQLException {

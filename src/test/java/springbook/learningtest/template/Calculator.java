@@ -7,14 +7,18 @@ import java.io.IOException;
 public class Calculator {
 
     public Integer calcSum(String filePath) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(filePath));
-        Integer sum = 0;
-        String line = null;
-        while ((line = br.readLine()) != null) {
-            sum += Integer.valueOf(line);
-        }
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath));) {
+            Integer sum = 0;
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                sum += Integer.valueOf(line);
+            }
 
-        br.close();
-        return sum;
+            br.close();
+            return sum;
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            throw e;
+        }
     }
 }

@@ -17,7 +17,7 @@ public class Calculator {
         }
     }
 
-    public Integer calcSum(String filePath) throws IOException {
+    public Integer calcSum(String filepath) throws IOException {
         BufferedReaderCallback sumCallback = new BufferedReaderCallback() {
             public Integer doSomethingWithReader(BufferedReader br) throws IOException {
                 Integer sum = 0;
@@ -29,6 +29,8 @@ public class Calculator {
                 return sum;
             }
         };
-        return fileReadTemplate(filePath, sumCallback);
+        return fileReadTemplate(filepath, sumCallback);
+    }
+
     }
 }

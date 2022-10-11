@@ -5,9 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.sql.DataSource;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import springbook.user.domain.User;
 
 public class UserDao {
@@ -66,13 +68,17 @@ public class UserDao {
     }
 
     public int getCount() throws SQLException {
-        try (Connection c = dataSource.getConnection();
-                PreparedStatement ps = c.prepareStatement("select count(*) from users");
-                ResultSet rs = ps.executeQuery();) {
-            rs.next();
-            return rs.getInt(1);
-        } catch (SQLException e) {
-            throw e;
-        }
+        return this.jdbcTemplate.query(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                return con.prepareStatement("select count(*) from users");
+            }
+        }, new ResultSetExtractor<Integer>() {
+            @Override
+            public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
+                rs.next();
+                return rs.getInt(1);
+            }
+        });
     }
 }

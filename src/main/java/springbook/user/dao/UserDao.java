@@ -13,6 +13,12 @@ import springbook.user.domain.User;
 
 public class UserDao {
 
+    public void setDataSource(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
+
+    private JdbcTemplate jdbcTemplate;
+
     private RowMapper<User> userMapper =
             new RowMapper<User>() {
                 public User mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -24,12 +30,6 @@ public class UserDao {
                 }
             };
 
-    public void setDataSource(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-    }
-
-    private JdbcTemplate jdbcTemplate;
-
     public void add(final User user) throws SQLException {
         this.jdbcTemplate.update("insert into users(id, name, password) values(?,?,?)",
                 user.getId(), user.getName(), user.getPassword());
@@ -37,20 +37,11 @@ public class UserDao {
 
     public User get(String id) {
         return this.jdbcTemplate.queryForObject("select * from users where id = ?",
-                new Object[]{id},
-                this.userMapper);
+                new Object[]{id}, this.userMapper);
     }
 
     public void deleteAll() {
-        this.jdbcTemplate.update(
-                new PreparedStatementCreator() {
-                    @Override
-                    public PreparedStatement createPreparedStatement(Connection con)
-                            throws SQLException {
-                        return con.prepareStatement("delete from users");
-                    }
-                }
-        );
+        this.jdbcTemplate.update("delete from users");
     }
 
     public int getCount() throws SQLException {

@@ -30,7 +30,7 @@ public class UserDao {
                 }
             };
 
-    public void add(final User user) throws SQLException {
+    public void add(final User user) {
         this.jdbcTemplate.update("insert into users(id, name, password) values(?,?,?)",
                 user.getId(), user.getName(), user.getPassword());
     }
@@ -44,7 +44,7 @@ public class UserDao {
         this.jdbcTemplate.update("delete from users");
     }
 
-    public int getCount() throws SQLException {
+    public int getCount() {
         return this.jdbcTemplate.queryForObject("select count(*) from users", Integer.class);
     }
 

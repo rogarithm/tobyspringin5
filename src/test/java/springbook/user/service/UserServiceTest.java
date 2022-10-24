@@ -29,6 +29,9 @@ public class UserServiceTest {
     @Autowired
     UserDao userDao;
 
+    @Autowired
+    DataSource dataSource;
+
     List<User> users;
 
     @BeforeEach
@@ -43,7 +46,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void upgradeLevels() {
+    public void upgradeLevels() throws Exception {
         userDao.deleteAll();
         for (User user : users) {
             userDao.add(user);
@@ -86,9 +89,10 @@ public class UserServiceTest {
     }
 
     @Test
-    public void upgradeAllOrNothing() {
+    public void upgradeAllOrNothing() throws Exception {
         TestUserService testUserService = new TestUserService(users.get(3).getId());
         testUserService.setUserDao(this.userDao);
+        testUserService.setDataSource(this.dataSource);
 
         userDao.deleteAll();
         for (User user : users) {
@@ -115,8 +119,9 @@ public class UserServiceTest {
 
         @Override
         protected void upgradeLevel(User user) {
-            if (user.getId().equals(this.id))
+            if (user.getId().equals(this.id)) {
                 throw new TestUserServiceException();
+            }
             super.upgradeLevel(user);
         }
     }

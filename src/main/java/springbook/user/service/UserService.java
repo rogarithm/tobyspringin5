@@ -31,10 +31,15 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    public void upgradeLevels() throws Exception {
-        PlatformTransactionManager transactionManager = new JtaTransactionManager();
+    private PlatformTransactionManager transactionManager;
 
-        TransactionStatus status = transactionManager.getTransaction(
+    public void setTransactionManager(PlatformTransactionManager transactionManager) {
+        this.transactionManager = transactionManager;
+    }
+
+    public void upgradeLevels() throws Exception {
+
+        TransactionStatus status = this.transactionManager.getTransaction(
                 new DefaultTransactionDefinition());
         try {
             List<User> users = userDao.getAll();
@@ -43,9 +48,9 @@ public class UserService {
                     upgradeLevel(user);
                 }
             }
-            transactionManager.commit(status);
+            this.transactionManager.commit(status);
         } catch (RuntimeException e) {
-            transactionManager.rollback(status);
+            this.transactionManager.rollback(status);
             throw e;
         }
     }

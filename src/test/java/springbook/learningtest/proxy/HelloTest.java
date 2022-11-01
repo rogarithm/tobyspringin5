@@ -21,6 +21,7 @@ public class HelloTest {
         assertThat(proxiedHello.sayHello("Toby")).isEqualTo("HELLO TOBY");
         assertThat(proxiedHello.sayHi("Toby")).isEqualTo("HI TOBY");
         assertThat(proxiedHello.sayThankYou("Toby")).isEqualTo("THANK YOU TOBY");
+        assertThat(proxiedHello.yell()).isEqualTo(11);
     }
 
     @Test
@@ -29,5 +30,9 @@ public class HelloTest {
                 getClass().getClassLoader(),
                 new Class[]{Hello.class},
                 new UppercaseHandler(new HelloTarget()));
+        assertThat(proxiedHello.sayHello("Toby")).isEqualTo("HELLO TOBY");
+        assertThat(proxiedHello.sayHi("Toby")).isEqualTo("HI TOBY");
+        assertThat(proxiedHello.sayThankYou("Toby")).isEqualTo("THANK YOU TOBY");
+        assertThat(proxiedHello.yell()).isEqualTo(11);
     }
 }

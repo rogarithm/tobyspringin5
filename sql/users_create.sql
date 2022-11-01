@@ -9,3 +9,5 @@ alter table users
 add column login int not null after level;
 alter table users
 add column recommend int not null after login;
+alter table users
+add column email varchar(20) not null after recommend;

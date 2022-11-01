@@ -1,6 +1,5 @@
 package springbook.user.service;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Properties;
 import javax.mail.Message;

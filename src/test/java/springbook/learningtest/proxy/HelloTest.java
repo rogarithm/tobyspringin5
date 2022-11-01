@@ -16,15 +16,6 @@ public class HelloTest {
     }
 
     @Test
-    public void helloUppercaseTest() {
-        Hello proxiedHello = new HelloUppercase(new HelloTarget());
-        assertThat(proxiedHello.sayHello("Toby")).isEqualTo("HELLO TOBY");
-        assertThat(proxiedHello.sayHi("Toby")).isEqualTo("HI TOBY");
-        assertThat(proxiedHello.sayThankYou("Toby")).isEqualTo("THANK YOU TOBY");
-        assertThat(proxiedHello.yell()).isEqualTo(11);
-    }
-
-    @Test
     public void dynamicProxyTest() {
         Hello proxiedHello = (Hello) Proxy.newProxyInstance(
                 getClass().getClassLoader(),

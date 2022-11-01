@@ -23,6 +23,8 @@ dependencies {
     implementation("org.hamcrest:hamcrest:2.2")
     annotationProcessor("org.projectlombok:lombok:1.18.24")
     implementation("javax.mail:mail:1.4.7")
+    implementation("javax.activation:activation:1.1.1")
+    implementation("org.springframework:spring-context-support:5.3.22")
 }
 
 tasks.getByName<Test>("test") {

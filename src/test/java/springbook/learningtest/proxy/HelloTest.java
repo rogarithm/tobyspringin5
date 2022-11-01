@@ -24,6 +24,7 @@ public class HelloTest {
         assertThat(proxiedHello.sayHello("Toby")).isEqualTo("HELLO TOBY");
         assertThat(proxiedHello.sayHi("Toby")).isEqualTo("HI TOBY");
         assertThat(proxiedHello.sayThankYou("Toby")).isEqualTo("THANK YOU TOBY");
+        assertThat(proxiedHello.justThankYou()).isEqualTo("Thank You");
         assertThat(proxiedHello.yell()).isEqualTo(11);
     }
 }

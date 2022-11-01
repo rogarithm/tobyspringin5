@@ -8,5 +8,7 @@ public interface Hello {
 
     String sayThankYou(String name);
 
+    String justThankYou();
+
     int yell();
 }

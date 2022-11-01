@@ -18,6 +18,12 @@ public class HelloTarget implements Hello {
     }
 
     @Override
+    public String justThankYou() {
+        return "Thank You";
+    }
+
+
+    @Override
     public int yell() {
         return 11;
     }

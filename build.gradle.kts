@@ -18,6 +18,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     testImplementation("org.assertj:assertj-core:3.23.1")
     testImplementation("org.springframework:spring-test:5.3.22")
+    testImplementation("org.mockito:mockito-core:2.10.0")
+
     implementation("org.springframework:spring-context:5.3.22")
     implementation("org.springframework:spring-jdbc:5.3.22")
     implementation("org.hamcrest:hamcrest:2.2")

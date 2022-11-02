@@ -66,16 +66,13 @@ public class UserService {
     }
 
     private void sendUpgradeEMail(User user) {
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("mail.server.com");
-
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(user.getEmail());
         mailMessage.setFrom("useradmin@ksug.org");
         mailMessage.setSubject("Upgrade 안내");
         mailMessage.setText("사용자님의 등급이 " + user.getLevel().name() +
                 "로 업그레이드되었습니다");
-        mailSender.send(mailMessage);
+        this.mailSender.send(mailMessage);
     }
 
     private boolean canUpgradeLevel(User user) {

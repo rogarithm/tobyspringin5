@@ -62,7 +62,6 @@ public class UserServiceTest {
     }
 
     @Test
-    @DirtiesContext
     public void upgradeLevels() throws Exception {
         UserServiceImpl userServiceImpl = new UserServiceImpl();
 

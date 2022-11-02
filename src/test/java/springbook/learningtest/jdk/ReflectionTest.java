@@ -9,19 +9,18 @@ public class ReflectionTest {
 
     @Test
     public void invokeMethod() throws Exception {
-        String name = "Spring";
+        String target = "Spring";
 
         // length()
-        assertThat(name.length()).isEqualTo(6);
+        assertThat(target.length()).isEqualTo(6);
 
         Method lengthMethod = String.class.getMethod("length");
-        assertThat((Integer) lengthMethod.invoke(name)).isEqualTo(6);
+        assertThat((Integer) lengthMethod.invoke(target)).isEqualTo(6);
 
         // charAt()
-        assertThat(name.charAt(0)).isEqualTo('S');
+        assertThat(target.charAt(0)).isEqualTo('S');
 
         Method charAtMethod = String.class.getMethod("charAt", int.class);
-        assertThat((Character) charAtMethod.invoke(name, 0)).isEqualTo('S');
+        assertThat((Character) charAtMethod.invoke(target, 0)).isEqualTo('S');
     }
-
 }

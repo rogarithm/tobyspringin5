@@ -39,9 +39,6 @@ public class UserServiceTest {
     UserDao userDao;
 
     @Autowired
-    DataSource dataSource;
-
-    @Autowired
     PlatformTransactionManager transactionManager;
 
     @Autowired
